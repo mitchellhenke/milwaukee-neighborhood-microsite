@@ -18,7 +18,7 @@
                                 /* geolocation is available */
                                 navigator.geolocation.getCurrentPosition(function(position) {
                                         console.log([position.coords.latitude, position.coords.longitude]);
-                                        url = "http://localhost:4001/api/neighborhood?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
+                                        url = "https://mprop.mitchellhenke.com/api/neighborhood?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
                                         fetch(url)
                                                 .then(function(response) {
                                                         return response.json();

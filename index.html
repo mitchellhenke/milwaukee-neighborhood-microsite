@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+        <head>
+                <meta charset="utf-8">
+                <title>What Neighborhood?</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+
+        <body>
+                <p>This website asks for your location to tell you what Milwaukee neighborhood you are in!</p>
+                <p>The neighborhood information comes from the City of Milwaukee's Map Milwaukee Portal and the Milwaukee Neighborhood Identification Project.  No location information is saved or tracked.</p>
+                <div id="neighborhood">
+                </div>
+                <script>
+                        const neighborhoodDiv = document.querySelector('#neighborhood');
+                        if ("geolocation" in navigator) {
+                                console.log("GEOLOCATION AVAILABLE");
+                                /* geolocation is available */
+                                navigator.geolocation.getCurrentPosition(function(position) {
+                                        console.log([position.coords.latitude, position.coords.longitude]);
+                                        url = "http://localhost:4001/api/neighborhood?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
+                                        fetch(url)
+                                                .then(function(response) {
+                                                        return response.json();
+                                                })
+                                                .then(function(json) {
+                                                        const neighborhood = json.name;
+                                                        if(neighborhood) {
+                                                                neighborhoodDiv.textContent = 'You are in the ' + neighborhood + ' neighborhood!'
+                                                        } else {
+                                                                neighborhoodDiv.textContent = "It looks like you're in a non-Milwaukee neighborhood!"
+                                                        }
+                                                });
+                                }, function(error) {
+                                        neighborhoodDiv.textContent = 'There was an error getting your location :(';
+                                });
+                        } else {
+                                neighborhoodDiv.textContent = 'Request to access location was denied (which unfortunately makes it more difficult to determine which neighborhood you are in) :(' ;
+                        }
+                </script>
+        </body>
+</html>

@@ -11,8 +11,28 @@
                 <p>The neighborhood information comes from the City of Milwaukee's Map Milwaukee Portal and the Milwaukee Neighborhood Identification Project.  No location information is saved or tracked.</p>
                 <div id="neighborhood">
                 </div>
+                <div id="randomNeighborhood">
+                </div>
+                <button id="randomButton">
+                        Give me a random neighborhood
+                </button>
+
                 <script>
                         const neighborhoodDiv = document.querySelector('#neighborhood');
+                        const randomButton = document.querySelector('#randomButton');
+                        const randomNeighborhoodDiv = document.querySelector('#randomNeighborhood');
+                        randomButton.onclick = function(e) {
+                                url = "http://localhost:4001/api/neighborhood_random";
+                                fetch(url)
+                                        .then(function(response) {
+                                                return response.json();
+                                        })
+                                        .then(function(json) {
+                                                const neighborhood = json.name;
+                                                randomNeighborhoodDiv.textContent = 'Your random neighborhood is ' + neighborhood + '!'
+                                        });
+                        };
+
                         if ("geolocation" in navigator) {
                                 console.log("GEOLOCATION AVAILABLE");
                                 /* geolocation is available */

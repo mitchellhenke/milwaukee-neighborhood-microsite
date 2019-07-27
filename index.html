@@ -22,7 +22,7 @@
                         const randomButton = document.querySelector('#randomButton');
                         const randomNeighborhoodDiv = document.querySelector('#randomNeighborhood');
                         randomButton.onclick = function(e) {
-                                url = "http://localhost:4001/api/neighborhood_random";
+                                url = "https://mprop.mitchellhenke.com/api/neighborhood_random";
                                 fetch(url)
                                         .then(function(response) {
                                                 return response.json();
